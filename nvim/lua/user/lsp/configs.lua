@@ -9,7 +9,7 @@ end
 local lspconfig = require("lspconfig")
 --print "Lspconfig loaded"
 
-local servers = { "jsonls", "sumneko_lua", "pyright", "rust_analyzer", "julials", "cssls", "html", "texlab"}
+local servers = { "jsonls", "lua_ls", "pyright", "rust_analyzer", "julials", "cssls", "html", "texlab"}
 
 lsp_installer.setup({
 	ensure_installed = servers,
