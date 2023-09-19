@@ -67,6 +67,7 @@ return packer.startup(function(use)
 	-- lsp
 	use({ "neovim/nvim-lspconfig"}) -- enable LSP
 	-- use({ "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" }) -- for formatters and linters
+    use({"simrat39/symbols-outline.nvim"})
 
     -- dap
     use({ "mfussenegger/nvim-dap" })
@@ -94,6 +95,20 @@ return packer.startup(function(use)
 
     -- repl
     use({"jpalardy/vim-slime"})
+
+    -- Parenthesis support
+    use({"kylechui/nvim-surround",
+        tag="*",
+        config=function()
+            require("nvim-surround").setup({})
+        end
+    })
+    use {"windwp/nvim-autopairs",
+        config = function ()
+            require("nvim-autopairs").setup{}
+        end
+    }
+
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end

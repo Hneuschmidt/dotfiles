@@ -12,6 +12,12 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
 
+-- Rust specific
+keymap("n", "<leader>lcf", ":!cargo fmt<CR><CR>", opts)
+-- TODO Would be nice if we can go back to current position
+keymap("n", "<leader>;", "A;<Esc>", opts)
+
+
 -- general niceties
 keymap("n", "<leader>fs", "<cmd>w<CR>", opts)
 keymap("n", "<leader>fq", "<cmd>wq<CR>", opts)
@@ -30,8 +36,16 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, opts)
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, opts)
 vim.keymap.set("n", "<leader>fb", builtin.buffers, opts)
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, opts)
+vim.keymap.set("n", "<leader>fot", builtin.treesitter, opts)
+vim.keymap.set("n", "<leader>fob", builtin.lsp_document_symbols, opts)
+vim.keymap.set("n", "<leader>fod", builtin.diagnostics, opts)
 
 vim.keymap.set("n", "<leader>fd", "<Cmd>Telescope file_browser<CR>", {noremap=true, silent=true})
+
+
+-- Symbols outline
+
+vim.keymap.set("n", "<leader>so", "<Cmd>:SymbolsOutline<CR>", opts)
 
 
 -- Modes
