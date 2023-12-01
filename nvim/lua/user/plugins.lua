@@ -76,6 +76,7 @@ return packer.startup(function(use)
 
     -- latex specific
     use ({"lervag/vimtex"})
+    use ({"junegunn/vim-easy-align"})
 
     -- julia specific
     -- use({"adelarsq/vim-matchit"})
@@ -85,6 +86,11 @@ return packer.startup(function(use)
     --use({ "nvim-telescope/telescope.nvim", tag="0.1.0"})
     use({ "nvim-telescope/telescope.nvim"})
     use({ "nvim-telescope/telescope-file-browser.nvim"})
+    use({ "ggandor/leap.nvim",
+        config=function()
+            require("leap").add_default_mappings()
+        end
+    })
 
 	-- treesitter
 	use({"nvim-treesitter/nvim-treesitter"})

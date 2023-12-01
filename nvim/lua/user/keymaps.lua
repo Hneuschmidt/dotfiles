@@ -17,6 +17,18 @@ keymap("n", "<leader>lcf", ":!cargo fmt<CR><CR>", opts)
 -- TODO Would be nice if we can go back to current position
 keymap("n", "<leader>;", "A;<Esc>", opts)
 
+-- Latex specific
+keymap("n", "<leader>ee", "A \\\\<Esc>", opts)
+keymap("n", "<leader>aa", "a & ", opts)
+
+keymap("v", "<leader>ea", ":EasyAlign ", opts)
+keymap("v", "<leader>el", ":LiveEasyAlign ", opts)
+keymap("v", "<leader>et", ":EasyAlign *&", opts)
+
+keymap("n", "<localleader>vc", "<CMD>VimtexCompile<CR>", opts)
+keymap("n", "<localleader>vC", "<CMD>VimtexClean<CR>", opts)
+keymap("n", "<localleader>vv", "<CMD>VimtexView<CR>", opts)
+
 
 -- general niceties
 keymap("n", "<leader>fs", "<cmd>w<CR>", opts)
@@ -26,6 +38,13 @@ keymap("v", "<leader>cl", ":norm i", opts)
 keymap("n", "<leader>cl", ":norm I", opts)
 keymap("v", "<leader>cd", ":norm ", opts)
 keymap("n", "<leader>cd", ":norm ", opts)
+
+keymap("v", "<leader>cww", "<CMD>'<, '>w !wc -w<CR>", opts)  -- count words
+keymap("v", "<leader>cwl", "<CMD>'<, '>w !wc -l<CR>", opts)  -- count words
+keymap("v", "<leader>cwm", "<CMD>'<, '>w !wc -m<CR>", opts)  -- count words
+keymap("n", "<leader>cww", "<CMD>w !wc -w<CR>", opts)  -- count words
+keymap("n", "<leader>cwl", "<CMD>w !wc -l<CR>", opts)  -- count words
+keymap("n", "<leader>cwm", "<CMD>w !wc -m<CR>", opts)  -- count words
 
 
 local _, builtin = pcall(require, "telescope.builtin")

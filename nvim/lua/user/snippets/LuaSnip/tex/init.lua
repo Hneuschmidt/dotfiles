@@ -132,6 +132,16 @@ return {
         )
     ),
 
+    s({trig="tbr", dscr = "Expands 'tsr' into {}"},
+        fmta("\\<>{<>} <>",
+            {
+              i(1, ""),
+              d(2, get_visual),
+              i(3, ""),
+            }
+        )
+    ),
+
     s({trig="tem", dscr = "Expands 'tem' into \\emph{}"},
         fmta("\\emph{<>}",
             {
@@ -157,7 +167,7 @@ return {
         )
     ),
 
-    s({trig="figure", dscr="Inserts a latexfigure using \\includegraphics"},
+    s({trig="figuree", dscr="Inserts a latex figure using \\includegraphics"},
         fmta(
             [[
             \begin{figure}
@@ -257,23 +267,6 @@ return {
         )
     ),
     
-    s({trig="h1", descr="Section", snippetType="autosnippet"},
-        fmta(
-        [[\section{<>}]],
-        { i(1) }
-        ),
-        { condition=line_begin }
-    ),
-
-    s({trig="h2", descr="Subsection", snippetType="autosnippet"},
-        fmta(
-        [[\subsection{<>}]],
-        { i(1) }
-        ),
-        { condition=line_begin }
-    ),
-
-
     -- Tikz
     s({trig="dd", snippetType='autosnippet'},
             fmta(
@@ -296,7 +289,7 @@ return {
         {condition = tex_utils.in_tikz}
     ),
 
-    s({trig="coord", snippetType='autosnippet'},
+    s({trig="coordd", snippetType='autosnippet'},
             fmta(
             "\\coordinate <> at (<>);",
             {
@@ -307,8 +300,72 @@ return {
         {condition = tex_utils.in_tikz}
     ),
 
-    s({trig="...", descr="Turns ... into \\dots"},
+    s({trig="ccc", snippetType='autosnippet'},
+            fmta(
+            "\\cite{<>} <>",
+            {
+            i(1),
+            i(0),
+            }
+            )
+    ),
+
+    s({trig="d..", dscr="Turns ... into \\dots"},
         {t("\\dots")}
+    ),
+
+    s({trig="cm", dscr="Checkmark"},
+        {t("\\checkmark")}
+    ),
+
+    s({trig="sim", dscr="Tilde (\\sim)"},
+        {t("\\sim")},
+        {condition=tex_utils.in_mathzone}
+    ),
+
+    -- Sectioning
+    s({trig="h0", dscr="Basic setup for a new chapter", snippetType='autosnippet'},
+        fmta(
+            [[
+            \chapter{<>}
+            \label{chap:<>}
+            ]],
+            {i(1), i(2)}
+        ),
+        {condition=line_begin}
+    ),
+
+    s({trig="h1", dscr="Basic setup for a new section", snippetType='autosnippet'},
+        fmta(
+            [[
+            \section{<>}
+            \label{sec:<>}
+            ]],
+            {i(1), i(2)}
+        ),
+        {condition=line_begin}
+    ),
+
+    s({trig="h2", dscr="Basic setup for a new subsection", snippetType='autosnippet'},
+        fmta(
+            [[
+            \subsection{<>}
+            \label{sec:<>}
+            ]],
+            {i(1), i(2)}
+        ),
+        {condition=line_begin}
+    ),
+
+    s({trig="h3", dscr="Basic setup for a new subsubsection", snippetType='autosnippet'},
+        fmta(
+            [[
+            \subsubsection{<>}
+            \label{sec:<>}
+            ]],
+            {i(1), i(2)}
+        ),
+        {condition=line_begin}
     ),
 
 
