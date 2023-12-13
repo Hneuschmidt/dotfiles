@@ -11,7 +11,6 @@ keymap("", "<S-k>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-
 -- Rust specific
 keymap("n", "<leader>lcf", ":!cargo fmt<CR><CR>", opts)
 -- TODO Would be nice if we can go back to current position
@@ -46,6 +45,11 @@ keymap("n", "<leader>cww", "<CMD>w !wc -w<CR>", opts)  -- count words
 keymap("n", "<leader>cwl", "<CMD>w !wc -l<CR>", opts)  -- count words
 keymap("n", "<leader>cwm", "<CMD>w !wc -m<CR>", opts)  -- count words
 
+-- jumps
+keymap("n", "g{", "vipo<Esc>", opts)
+keymap("n", "g}", "vipoo<Esc>", opts)
+keymap("n", "gp", "vipo<Esc>", opts)
+keymap("n", "gP", "vipoo<Esc>", opts)
 
 local _, builtin = pcall(require, "telescope.builtin")
 -- local builtin = require("telescope.builtin")
@@ -120,9 +124,13 @@ keymap("v", ">", ">gv", opts)
 keymap("n", "<leader>t", ":sp term://zsh<CR>a", opts )  -- open a terminal
 keymap("n", "<leader>pi", ":sp term://ipython<CR>a", opts )  -- open an ipython console
 keymap("n", "<leader>pp", ":sp term://python<CR>a", opts )  -- open a python console
-keymap("n", "<leader>j", ":sp term://julia --project='.'<CR>a", opts )  -- open a python console
+keymap("n", "<leader>j", ":sp term://julia --project=.<CR>a", opts )  -- open a python console
 
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts) 
+
+-- interface
+keymap("n", "<leader>nr", "<CMD>set relativenumber!<CR>", opts)
+keymap("n", "<leader>na", "<CMD>set number!<CR>", opts)

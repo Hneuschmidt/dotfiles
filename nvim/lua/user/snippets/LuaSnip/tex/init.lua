@@ -1,4 +1,9 @@
--- THIS PART NEEDS TO BE COPIED EVERY TIME --
+-- Get the current directory
+local current_directory = debug.getinfo(1, "S").source:sub(2):match("(.*[/\\])")
+-- Modify the package.path to include the relative path
+package.path = package.path .. ';' .. current_directory .. '?.lua'
+-- Require the file using the relative path
+local header = require('header')
 local get_visual = function(args, parent)
     if (#parent.snippet.env.SELECT_RAW > 0) then
         return sn(nil, i(1, parent.snippet.env.SELECT_RAW))
@@ -6,98 +11,10 @@ local get_visual = function(args, parent)
         return sn(nil, i(1))
     end
 end
-
-local return_capture = function(_, snip) return snip.captures[1] end
-local line_begin = require("luasnip.extras.expand_conditions").line_begin
-
-
--- Latex-specific conditional expansio funcitions (requires VimTex)
-local tex_utils = {}
-tex_utils.in_mathzone = function ()
-    return vim.fn['vimtex#syntax#in_mathzone']() == 1
-end
-
-tex_utils.in_text = function ()
-    return not tex_utils.in_mathzone()
-end
-
-tex_utils.in_commment = function ()
-    return vim.fn['vimtex#syntax#in_comment']() == 1
-end
-
-tex_utils.in_env = function(name)
-    local is_inside = vim.fn['vimtex#env#is_inside'](name)
-    return (is_inside[1] > 0 and is_inside[2] > 0)
-end
-
-tex_utils.in_tikz = function()
-    return tex_utils.in_env('tikzpicture')
-end
-
--- END OF PART THAT GETS COPIED
+header.get_visual = get_visual
 
 return {
-
-    -- convoluted and long way to write a columns snippet
-    s({trig="columns"},
-        {
-            t(
-                {
-                    "\\begin{columns}",
-                    "   \\begin{column}{0.5\\textwidth}",
-                    "       "
-                }
-            ),
-            i(1, "Column1"),
-            t(
-                {
-                    "",
-                    "   \\end{column}",
-                    "   \\begin{column}{0.5\\textwidth}",
-                    "       ",
-                }
-            ),
-            i(2, "Column2"),
-            t(
-                {
-                    "",
-                    "   \\end{column}",
-                    "\\end{columns}",
-                }
-            ),
-        }
-    ),
-
-
-    -- TODO move to a environments file
-    s({trig="eq", dscr="A latex equation environment"},
-        fmta(
-        [[
-            \begin{equation}
-                <>
-            \end{equation}
-        ]],
-        {i(0)}
-        )
-
-    ),
-
-    s({trig="frmm", dscr="Create a beamer frame environment", wordTrig=true, snippetType="autosnippet" },
-        fmta(
-        [[
-            \begin{frame}
-                \frametitle{<>}
-                <>
-            \end{frame}
-        ]],
-        {
-            d(1, get_visual),
-            i(0),
-        }
-        )
-
-    ),
-
+    -- environments
     s({trig="envv", snippetType="autosnippet"},
         fmta(
         [[
@@ -114,72 +31,54 @@ return {
         )
     ),
 
-    s({trig="hr", dscr="The hyperref package's href{}{} command (url links)"},
+    s({trig="columns"},
         fmta(
-            [[\href{<>}{<>}]],
-            {
-                i(1, "url"),
-                i(2, "name"),
-            }
+        [[
+        \begin{columns}
+            \begin{column}{<>\textwidth}
+                <>
+            \end{column}
+            \begin{column}{<>\textwidth}
+                <>
+            \end{column}
+        \end{columns}
+        ]],
+        {
+            i(1, "0.5"),
+            i(3),
+            i(2, "0.5"),
+            i(0),
+        }
         )
     ),
 
-    s({trig="tii", dscr = "Expands 'tii' into \\textit{}"},
-        fmta("\\textit{<>}",
-            {
-              d(1, get_visual),
-            }
+    s({trig="eq", dscr="A latex equation environment"},
+        fmta(
+        [[
+            \begin{equation}
+                <>
+            \end{equation}
+        ]],
+        {i(0)}
         )
+
     ),
 
-    s({trig="tbr", dscr = "Expands 'tsr' into {}"},
-        fmta("\\<>{<>} <>",
-            {
-              i(1, ""),
-              d(2, get_visual),
-              i(3, ""),
-            }
-        )
-    ),
-
-    s({trig="tem", dscr = "Expands 'tem' into \\emph{}"},
-        fmta("\\emph{<>}",
-            {
-              d(1, get_visual),
-            }
-        )
-    ),
-
-    s({trig="tbf", dscr = "Expands 'tbf' into \\textbf{}"},
-        fmta("\\textbf{<>}",
-            {
-              d(1, get_visual),
-            }
-        )
-    ),
-
-    s({trig="tcl", dscr = "Expands 'tcl' into \\textcolor{}{}"},
-        fmta("\\textcolor{<>}{<>}",
-            {
-              i(1, "color"),
-              d(1, get_visual),
-            }
-        )
-    ),
-
-    s({trig="figuree", dscr="Inserts a latex figure using \\includegraphics"},
+    s({trig="figg", dscr="Inserts a latex figure", snippetType="autosnippet"},
         fmta(
             [[
             \begin{figure}
-                \includegraphics[width=0.5\textwidth]{<>}
+                \<><>{<>}
                 \caption{<>}
                 \label{fig:<>}
             \end{figure}
             ]],
             {
-                i(1, "filename.png"),
-                i(2, "Caption"),
-                i(3, "label"),
+                i(1, "includegraphics"),
+                i(2, "[width=\\textwidth]"),
+                i(3, "filename.png"),
+                i(4, "Caption"),
+                i(5, "label"),
             }
         )
     ),
@@ -188,33 +87,36 @@ return {
         fmta(
         [[
         \begin{figure}
-        \centering
+        \begin{center}
             % 1st subfigure
-            \begin{subfigure}{t}{0.4\textwidth}
-            \includegraphics[width=0.5\textwidth]{<>}
+            \begin{subfigure}{t}{<>}
+            \includegraphics[width=\textwidth]{<>}
             \caption{<>}
             \label{fig:<>}
             \end{subfigure}
             % 2nd subfigure
-            \begin{subfigure}{t}{0.4\textwidth}
-            \includegraphics[width=0.5\textwidth]{<>}
+            \begin{subfigure}{t}{<>}
+            \includegraphics[width=\textwidth]{<>}
             \caption{<>}
             \label{fig:<>}
             \end{subfigure}
+        \end{center}
         \end{figure}
         ]],
         {
-            i(1, "figure1.png"),
-            i(2, "Caption 1"),
-            i(3, "Label 1"),
-            i(4, "figure2.png"),
-            i(5, "Caption 2"),
-            i(6, "Label 2"),
+            i(1, "0.5\\textwidth"),
+            i(2, "figure1.png"),
+            i(3, "Caption 1"),
+            i(4, "Label 1"),
+            i(5, "0.5\\textwidth"),
+            i(6, "figure2.png"),
+            i(7, "Caption 2"),
+            i(8, "Label 2"),
         }
     )
     ),
 
-    s({trig="item", dscr="Creates an itemize environment"},
+    s({trig="itemm", dscr="Creates an itemize environment"},
         fmta(
         [[
         \begin{itemize}
@@ -236,33 +138,85 @@ return {
         )
     ),
 
-
+    -- commands
     s({trig="it", dscr="Creates an \\item for itemize or enumerate environments."},
         {t("\\item ")}
     ),
 
     s({trig="itp", dscr="Creates an empty \\item[] for itemize or enumerate envs."},
-        {t("\\item[] ")}
+        fmta("\\item[<>] <>", {i(1), i(0)})
     ),
 
+    s({trig="hr", dscr="The hyperref package's href{}{} command (url links)"},
+        fmta(
+            [[\href{<>}{<>}]],
+            {
+                i(1, "url"),
+                d(2, header.get_visual),
+            }
+        )
+    ),
+
+    s({trig="tii", dscr = "Expands 'tii' into \\textit{}"},
+        fmta("\\textit{<>}",
+            {
+              d(1, header.get_visual),
+            }
+        )
+    ),
+
+    s({trig="tbr", dscr = "Expands 'tsr' into {}"},
+        fmta("\\<>{<>} <>",
+            {
+              i(1, ""),
+              d(2, header.get_visual),
+              i(3, ""),
+            }
+        )
+    ),
+
+    s({trig="tem", dscr = "Expands 'tem' into \\emph{}"},
+        fmta("\\emph{<>}",
+            {
+              d(1, header.get_visual),
+            }
+        )
+    ),
+
+    s({trig="tbf", dscr = "Expands 'tbf' into \\textbf{}"},
+        fmta("\\textbf{<>}",
+            {
+              d(1, header.get_visual),
+            }
+        )
+    ),
+
+    s({trig="tcl", dscr = "Expands 'tcl' into \\textcolor{}{}"},
+        fmta("\\textcolor{<>}{<>}",
+            {
+              i(1, "color"),
+              d(2, header.get_visual),
+            }
+        )
+    ),
+
+    -- math shortcuts TODO move to math.lua TODO regex trigger to not trigger in words
     s({trig="mm", dscr="Creates a inline math mode via $ $", wordTrig=true, regTrig=false, snippetType="autosnippet"},
         fmta(
         [[
-        <>$<>$
+        $<>$
         ]],
         {
-            f(return_capture),
-            d(1, get_visual),
+            d(1, header.get_visual),
         }
         )
     ),
 
     s({trig="ee", dscr="e to the power of selection", wordTrig=true, regTrig=false, snippetType="autosnippet"},
         fmta(
-        "<>e^{<>}",
+        "e^{<>}",
         {
-            f(return_capture),
-            d(1, get_visual),
+            d(1, header.get_visual),
         }
         )
     ),
@@ -276,7 +230,7 @@ return {
             i(0),
             }
             ),
-        {condition = tex_utils.in_tikz}
+        {condition = header.in_tikz}
     ),
 
     s({trig="db", snippetType='autosnippet'},
@@ -286,7 +240,7 @@ return {
             i(0),
             }
             ),
-        {condition = tex_utils.in_tikz}
+        {condition = header.in_tikz}
     ),
 
     s({trig="coordd", snippetType='autosnippet'},
@@ -297,7 +251,7 @@ return {
             i(0),
             }
             ),
-        {condition = tex_utils.in_tikz}
+        {condition = header.in_tikz}
     ),
 
     s({trig="ccc", snippetType='autosnippet'},
@@ -318,9 +272,9 @@ return {
         {t("\\checkmark")}
     ),
 
-    s({trig="sim", dscr="Tilde (\\sim)"},
+    s({trig="sim", dscr="Tilde (\\sim)", snippetType='autosnippet'},
         {t("\\sim")},
-        {condition=tex_utils.in_mathzone}
+        {condition=header.in_mathzone}
     ),
 
     -- Sectioning
@@ -332,7 +286,7 @@ return {
             ]],
             {i(1), i(2)}
         ),
-        {condition=line_begin}
+        {condition=header.line_begin}
     ),
 
     s({trig="h1", dscr="Basic setup for a new section", snippetType='autosnippet'},
@@ -343,7 +297,7 @@ return {
             ]],
             {i(1), i(2)}
         ),
-        {condition=line_begin}
+        {condition=header.line_begin}
     ),
 
     s({trig="h2", dscr="Basic setup for a new subsection", snippetType='autosnippet'},
@@ -354,7 +308,7 @@ return {
             ]],
             {i(1), i(2)}
         ),
-        {condition=line_begin}
+        {condition=header.line_begin}
     ),
 
     s({trig="h3", dscr="Basic setup for a new subsubsection", snippetType='autosnippet'},
@@ -365,8 +319,22 @@ return {
             ]],
             {i(1), i(2)}
         ),
-        {condition=line_begin}
+        {condition=header.line_begin}
     ),
+ 
+    -- beamer
+    s({trig="frmm", dscr="Create a beamer frame environment", wordTrig=true, snippetType="autosnippet" },
+        fmta(
+        [[
+            \begin{frame}{<>}
+                <>
+            \end{frame}
+        ]],
+        {
+            d(1, header.get_visual),
+            i(0),
+        }
+        )
 
-
+    ),
 }
