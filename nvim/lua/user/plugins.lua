@@ -93,8 +93,8 @@ return packer.startup(function(use)
     })
 
     -- hard mode
-    use("MunifTanjim/nui.nvim")
-    use("m4xshen/hardtime.nvim")
+    --use("MunifTanjim/nui.nvim")
+    --use("m4xshen/hardtime.nvim")
 
 	-- treesitter
 	use({"nvim-treesitter/nvim-treesitter"})
