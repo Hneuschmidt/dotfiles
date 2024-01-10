@@ -1,4 +1,6 @@
 local options = {
+    number=true,
+    relativenumber=true,
 	fileencoding = "utf-8",
 	showtabline = 2,
 	splitbelow = true,

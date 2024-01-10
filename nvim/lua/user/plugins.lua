@@ -50,7 +50,8 @@ return packer.startup(function(use)
 	-- colorschemes
 	use({"lunarvim/darkplus.nvim"})
 	use({"arcticicestudio/nord-vim"})
-	use({"rmehri01/onenord.nvim"})
+    use({"Hneuschmidt/twonord.nvim"})
+	--use({"rmehri01/onenord.nvim"})
 
 	-- snippets
 	use({ "L3MON4D3/LuaSnip"}) --snippet engine

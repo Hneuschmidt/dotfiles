@@ -121,10 +121,10 @@ keymap("v", ">", ">gv", opts)
 
 -- Terminal --
 -- Better terminal navigation
-keymap("n", "<leader>t", ":sp term://zsh<CR>a", opts )  -- open a terminal
-keymap("n", "<leader>pi", ":sp term://ipython<CR>a", opts )  -- open an ipython console
-keymap("n", "<leader>pp", ":sp term://python<CR>a", opts )  -- open a python console
-keymap("n", "<leader>j", ":sp term://julia --project=.<CR>a", opts )  -- open a python console
+keymap("n", "<leader>t", ":botright split term://zsh<CR>a", opts )  -- open a terminal
+keymap("n", "<leader>pi", ":botright split term://ipython<CR>a", opts )  -- open an ipython console
+keymap("n", "<leader>pp", ":botright split term://python<CR>a", opts )  -- open a python console
+keymap("n", "<leader>j", ":botright split term://julia --project=.<CR>a", opts )  -- open a julia console
 
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
