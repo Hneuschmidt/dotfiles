@@ -68,7 +68,8 @@ return packer.startup(function(use)
 	-- lsp
 	use({ "neovim/nvim-lspconfig"}) -- enable LSP
 	-- use({ "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" }) -- for formatters and linters
-    use({"simrat39/symbols-outline.nvim"})
+    --use({"simrat39/symbols-outline.nvim"})
+    use({"hedyhli/outline.nvim"})
 
     -- dap
     use({ "mfussenegger/nvim-dap" })

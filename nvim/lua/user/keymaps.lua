@@ -66,9 +66,9 @@ vim.keymap.set("n", "<leader>fod", builtin.diagnostics, opts)
 vim.keymap.set("n", "<leader>fd", "<Cmd>Telescope file_browser<CR>", {noremap=true, silent=true})
 
 
--- Symbols outline
+-- Outline
 
-vim.keymap.set("n", "<leader>so", "<Cmd>:SymbolsOutline<CR>", opts)
+vim.keymap.set("n", "<leader>so", "<Cmd>Outline<CR>", opts)
 
 
 -- Modes
