@@ -6,25 +6,32 @@ if not status_ok then
   return
 end
 
+--local md_status_ok, mason_dap = pcall(require, "mason-nvim-dap")
+--if not md_status_ok then
+--	print("mason nvim dap not okay")
+--  return
+--end
+
+-- mason_dap.setup({ ensure_installed = {"codelldb"}, handlers = {}})
+
 dap.adapters.lldb = {
     type="server",
     name="lldb",
     port="${port}",
     executable = {
-        command="/Users/hannes/.local/share/nvim/mason/bin/codelldb",
+        command="/home/hannes/.local/share/nvim/mason/bin/codelldb",
         args={"--port", "${port}"},
     }
 }
-
--- dap.adapters.cppdbg = {
---     id = "cppdbg",
---     type = "executable",
---     command = "/Users/hannes/.local/share/nvim/mason/packages/cpptools/extension/bin/cpptools",
---   }
+--dap.adapters.lldb = {
+--    type = "executable",
+--    command = "/home/hannes/.local/share/nvim/mason/bin/codelldb",
+--    name = "lldb",
+--}
 
 require "user.dap.configs"
 
 require("dapui").setup()
 
-require("nvim-dap-virtual-text").setup()
+--require("nvim-dap-virtual-text").setup()
 
