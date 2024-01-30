@@ -9,7 +9,7 @@ end
 local lspconfig = require("lspconfig")
 --print "Lspconfig loaded"
 
-local servers = { "jsonls", "lua_ls", "pyright", "julials", "cssls", "html", "texlab", "clangd", "marksman", "matlab_ls"}
+local servers = { "jsonls", "lua_ls", "pyright", "rust_analyzer", "julials", "cssls", "html", "texlab", "clangd", "marksman", "matlab_ls", "wgsl_analyzer"}
 
 lsp_installer.setup({
 	ensure_installed = servers,
