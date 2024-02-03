@@ -26,7 +26,7 @@ repository = "https://gitlab.com/mWalrus/ascent"
 commit = "*"
 version = "1.0.0"
 leftwm_versions = ">0.2.7"
-current = false
+current = true
 
 [[repos.themes]]
 name = "Blue Coffee"
@@ -155,7 +155,7 @@ repository = "https://github.com/TheRoniOne/ocean-night"
 commit = "*"
 version = "0.0.1"
 leftwm_versions = "*"
-current = true
+current = false
 
 [[repos.themes]]
 name = "Orange Forest"
