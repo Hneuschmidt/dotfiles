@@ -64,6 +64,10 @@ keybinds clear-defaults=true {
         bind "8" { GoToTab 8; SwitchToMode "Normal"; }
         bind "9" { GoToTab 9; SwitchToMode "Normal"; }
         bind "Tab" { ToggleTab; }
+        bind "Ctrl r" { NewTab {
+            name "Rust"
+            layout "rust_simple"
+        }; SwitchToMode "Normal"; }
     }
     scroll {
         bind "Ctrl s" { SwitchToMode "Normal"; }
