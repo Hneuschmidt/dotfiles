@@ -26,7 +26,7 @@ repository = "https://gitlab.com/mWalrus/ascent"
 commit = "*"
 version = "1.0.0"
 leftwm_versions = ">0.2.7"
-current = true
+current = false
 
 [[repos.themes]]
 name = "Blue Coffee"
@@ -266,4 +266,10 @@ current = false
 url = "localhost"
 name = "LOCAL"
 definitions_version = 1
-themes = []
+
+[[repos.themes]]
+name = "MyAscent"
+directory = "/home/hannes/.config/leftwm/themes/MyAscent"
+version = "0.0.0"
+leftwm_versions = "*"
+current = true
