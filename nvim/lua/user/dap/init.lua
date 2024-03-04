@@ -19,7 +19,7 @@ dap.adapters.lldb = {
     name="lldb",
     port="${port}",
     executable = {
-        command="/home/hannes/.local/share/nvim/mason/bin/codelldb",
+        command="/home/ubuntu/.local/share/nvim/mason/bin/codelldb",
         args={"--port", "${port}"},
     }
 }
