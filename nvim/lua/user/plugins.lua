@@ -81,6 +81,9 @@ return packer.startup(function(use)
     use ({"lervag/vimtex"})
     use ({"junegunn/vim-easy-align"})
 
+    -- typst specific
+    use ( {"kaarmu/typst.vim"} )
+
     -- julia specific
     -- use({"adelarsq/vim-matchit"})
     use({"juliaeditorsupport/julia-vim" })
