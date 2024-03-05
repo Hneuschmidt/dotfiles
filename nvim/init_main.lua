@@ -9,10 +9,12 @@ require "user.cmp"
 require "user.telescope"
 require "user.treesitter"
 require "user.dap"
---require "user.autopairs"
+require "user.autopairs"
 --require "user.comment"
 --require "user.whichkey"
 require "user.slime"
 require "user.symbolsoutline"
 require "user.vimtex"
 require "user.hardmode"
+
+vim.filetype.add({extension = {typ = 'typst'}})
