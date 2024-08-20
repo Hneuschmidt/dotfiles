@@ -51,6 +51,7 @@ return packer.startup(function(use)
 	use({"lunarvim/darkplus.nvim"})
 	use({"arcticicestudio/nord-vim"})
     use({"Hneuschmidt/twonord.nvim"})
+    use({"catppuccin/nvim", as = "catppuccin"})
 	--use({"rmehri01/onenord.nvim"})
 
 	-- snippets
@@ -75,6 +76,8 @@ return packer.startup(function(use)
     use({ "mfussenegger/nvim-dap" })
     use({"jay-babu/mason-nvim-dap.nvim"})
     use({ "theHamsta/nvim-dap-virtual-text" })
+
+    use("nvim-neotest/nvim-nio")
     use({ "rcarriga/nvim-dap-ui" , requires = {"mfussenegger/nvim-dap"}})
 
     -- latex specific
