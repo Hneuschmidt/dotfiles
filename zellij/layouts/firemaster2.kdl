@@ -1,0 +1,15 @@
+layout {
+    pane { 
+        command "sshuttle" 
+        args "-H" "-r" "cvop@calvalus-production3" "64.225.138.171/32"
+        start_suspended true
+    }
+    pane {
+        command "sshuttle" ;
+        args "-H" "-r" "firemaster2" "10.0.0.0/24";
+        start_suspended true
+    }
+    pane size=1 borderless=true {
+        plugin location="zellij:compact-bar"
+    }
+}
