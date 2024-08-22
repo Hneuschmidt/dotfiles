@@ -30,3 +30,9 @@ dap.configurations.rust = {
 dap.configurations.c = dap.configurations.rust
 dap.configurations.cpp = dap.configurations.rust
 
+local status_ok, dappython = pcall(require, "dap-python")
+if not status_ok then
+    print("dap-python not okay")
+else
+    dappython.setup("~/micromamba/envs/dap/bin/python")
+end
