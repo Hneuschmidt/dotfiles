@@ -3,7 +3,16 @@ local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 
 -- Shorten function name
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
+
+local function desc_opts(desc)
+    local new_opts = {}
+    for k, v in pairs(opts) do
+        new_opts[k] = v
+    end
+    new_opts["desc"] = desc
+    return new_opts
+end
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
@@ -12,9 +21,9 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
 -- Rust specific
-keymap("n", "<leader>lcf", ":!cargo fmt<CR><CR>", opts)
+keymap("n", "<leader>lcf", ":!cargo fmt<CR><CR>", desc_opts("run cargo fmt on project"))
 -- TODO Would be nice if we can go back to current position
-keymap("n", "<leader>;", "A;<Esc>", opts)
+keymap("n", "<leader>;", "A;<Esc>", desc_opts("add a semicolon to the end of the line"))
 
 -- Latex specific
 keymap("n", "<leader>ee", "A \\\\<Esc>", opts)
@@ -30,20 +39,21 @@ keymap("n", "<localleader>vv", "<CMD>VimtexView<CR>", opts)
 
 
 -- general niceties
-keymap("n", "<leader>fs", "<cmd>w<CR>", opts)
-keymap("n", "<leader>fq", "<cmd>wq<CR>", opts)
-keymap("n", "<leader>sh", "<cmd>set hlsearch!<CR>", opts)
-keymap("v", "<leader>cl", ":norm i", opts)
-keymap("n", "<leader>cl", ":norm I", opts)
+keymap("n", "<leader>fs", "<cmd>w<CR>", desc_opts("save"))
+keymap("n", "<leader>fq", "<cmd>wq<CR>", desc_opts("save and quit"))
+keymap("n", "<leader>sh", "<cmd>set hlsearch!<CR>", desc_opts("toggle highlight search results"))
+keymap("v", "<leader>cl", ":norm i", desc_opts("add text to start of selection (:norm i)"))
+keymap("n", "<leader>cl", ":norm I", desc_opts("add text to start of line (:norm I)"))
 keymap("v", "<leader>cd", ":norm ", opts)
 keymap("n", "<leader>cd", ":norm ", opts)
+keymap("n", "<leader>rf", "<CMD>source %<CR>", desc_opts("Source current file"))
 
-keymap("v", "<leader>cww", "<CMD>'<, '>w !wc -w<CR>", opts)  -- count words
-keymap("v", "<leader>cwl", "<CMD>'<, '>w !wc -l<CR>", opts)  -- count words
-keymap("v", "<leader>cwm", "<CMD>'<, '>w !wc -m<CR>", opts)  -- count words
-keymap("n", "<leader>cww", "<CMD>w !wc -w<CR>", opts)  -- count words
-keymap("n", "<leader>cwl", "<CMD>w !wc -l<CR>", opts)  -- count words
-keymap("n", "<leader>cwm", "<CMD>w !wc -m<CR>", opts)  -- count words
+keymap("v", "<leader>cww", "<CMD>'<, '>w !wc -w<CR>", desc_opts("count words in selection"))  -- count words
+keymap("v", "<leader>cwl", "<CMD>'<, '>w !wc -l<CR>", desc_opts("count lines in selection"))  -- count words
+keymap("v", "<leader>cwm", "<CMD>'<, '>w !wc -m<CR>", desc_opts("count bytes in selection"))  -- count words
+keymap("n", "<leader>cww", "<CMD>w !wc -w<CR>", desc_opts("count words in file"))  -- count words
+keymap("n", "<leader>cwl", "<CMD>w !wc -l<CR>", desc_opts("count lines in file"))  -- count words
+keymap("n", "<leader>cwm", "<CMD>w !wc -m<CR>", desc_opts("count bytes in file"))  -- count words
 
 -- jumps
 keymap("n", "g{", "vipo<Esc>", opts)
@@ -62,7 +72,7 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, opts)
 vim.keymap.set("n", "<leader>fot", builtin.treesitter, opts)
 vim.keymap.set("n", "<leader>fob", builtin.lsp_document_symbols, opts)
 vim.keymap.set("n", "<leader>fod", builtin.diagnostics, opts)
-vim.keymap.set("n", "<leader>f", builtin.keymaps, opts)
+vim.keymap.set("n", "<leader>fk", builtin.keymaps, opts)
 
 vim.keymap.set("n", "<leader>fd", "<Cmd>Telescope file_browser<CR>", {noremap=true, silent=true})
 
