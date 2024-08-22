@@ -76,6 +76,7 @@ return packer.startup(function(use)
     use({ "mfussenegger/nvim-dap" })
     use({"jay-babu/mason-nvim-dap.nvim"})
     use({ "theHamsta/nvim-dap-virtual-text" })
+    use({"mfussenegger/nvim-dap-python"})
 
     use("nvim-neotest/nvim-nio")
     use({ "rcarriga/nvim-dap-ui" , requires = {"mfussenegger/nvim-dap"}})
@@ -127,6 +128,8 @@ return packer.startup(function(use)
             require("nvim-autopairs").setup{}
         end
     }
+
+    use({"folke/which-key.nvim"})
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
