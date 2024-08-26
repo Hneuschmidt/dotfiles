@@ -1,10 +1,19 @@
 local status_ok, telescope = pcall(require, "telescope")
 if not status_ok then
-  return
+    print("telescope not okay")
+    return
 end
 
 local actions = require("telescope.actions")
 local config = require("telescope.config")
+
+
+-- search hidden files but not .git
+local telescopeConfig = require("telescope.config")
+local vimgrep_args = {unpack(telescopeConfig.values.vimgrep_arguments)}
+table.insert(vimgrep_args, "--hidden")
+table.insert(vimgrep_args, "--glob")
+table.insert(vimgrep_args, "!**/.git/*")
 
 
 telescope.setup({
