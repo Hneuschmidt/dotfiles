@@ -94,7 +94,7 @@ return packer.startup(function(use)
 
     -- navigation
     --use({ "nvim-telescope/telescope.nvim", tag="0.1.0"})
-    use({ "nvim-telescope/telescope.nvim"})
+    use({ "nvim-telescope/telescope.nvim", tag="0.1.8"})
     use({ "nvim-telescope/telescope-file-browser.nvim"})
     use({ "ggandor/leap.nvim",
         config=function()
