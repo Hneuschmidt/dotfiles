@@ -46,6 +46,7 @@ return packer.startup(function(use)
 
 	use({"williamboman/mason.nvim"}) 		-- lsp/dap etc installer
     use({"williamboman/mason-lspconfig.nvim"})
+    use({"airblade/vim-gitgutter"})
 
 	-- colorschemes
 	use({"lunarvim/darkplus.nvim"})
@@ -131,6 +132,13 @@ return packer.startup(function(use)
 
     use({"folke/which-key.nvim"})
 
+    use({"mechatroner/rainbow_csv"})
+
+    -- notes
+
+    use({"epwalsh/obsidian.nvim", tag="v3.9.0", requires={"nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim"}})
+
+    use({"nvim-treesitter/nvim-treesitter-context"})
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
