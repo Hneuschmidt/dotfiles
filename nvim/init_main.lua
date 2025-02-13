@@ -15,6 +15,7 @@ require "user.whichkey"
 require "user.slime"
 require "user.symbolsoutline"
 require "user.vimtex"
+require "user.obsidian"
 
 
 vim.filetype.add({extension = {typ = 'typst'}})
