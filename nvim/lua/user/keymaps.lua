@@ -21,7 +21,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
 -- Rust specific
-keymap("n", "<leader>lcf", ":!cargo fmt<CR><CR>", desc_opts("run cargo fmt on project"))
+keymap("n", "<leader>lcf", ":silent !cargo fmt<CR>", desc_opts("run cargo fmt on project"))
 -- TODO Would be nice if we can go back to current position
 keymap("n", "<leader>;", "A;<Esc>", desc_opts("add a semicolon to the end of the line"))
 
@@ -36,6 +36,15 @@ keymap("v", "<localleader>et", ":EasyAlign *&", opts)
 keymap("n", "<localleader>vc", "<CMD>VimtexCompile<CR>", opts)
 keymap("n", "<localleader>vC", "<CMD>VimtexClean<CR>", opts)
 keymap("n", "<localleader>vv", "<CMD>VimtexView<CR>", opts)
+
+-- Python specific
+keymap("n", "<localleader>fl", ":silent !uv run ruff format %<CR>", desc_opts("run ruff format on file"))
+keymap("n", "<localleader>fp", ":silent !uv run ruff format<CR>", desc_opts("run ruff format on project"))
+keymap("n", "<localleader>cc", ":!uv run ruff check %<CR>", desc_opts("Run ruff check on file (don't apply)"))
+keymap("n", "<localleader>cC", ":!uv run ruff check<CR>", desc_opts("Run ruff check on on project (don't apply)"))
+keymap("n", "<localleader>cf", ":silent !uv run ruff check --fix %<CR>", desc_opts("Run ruff check on file (apply fixes)"))
+keymap("n", "<localleader>cF", ":silent !uv run ruff check --fix<CR>", desc_opts("Run ruff check on project (apply fixes)"))
+-- TODO Would be nice if we can go back to current position
 
 
 -- general niceties
@@ -59,7 +68,7 @@ keymap("n", "<leader>cwm", "<CMD>w !wc -m<CR>", desc_opts("count bytes in file")
 keymap("n", "gp", "vipo<Esc>", desc_opts("Move cursor to start of paragraph"))
 keymap("n", "gP", "vipoo<Esc>", desc_opts("Move cursor to end of block"))
 
-local _, builtin = pcall(require, "telescope.builtin")
+local _builtin_ok, builtin = pcall(require, "telescope.builtin")
 -- local builtin = require("telescope.builtin")
 
 -- Telescope
@@ -69,9 +78,17 @@ vim.keymap.set("n", "<leader>fb", builtin.buffers, desc_opts("telescope buffers"
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, desc_opts("telescope help_tags"))
 vim.keymap.set("n", "<leader>fot", builtin.treesitter, desc_opts("telescope treesitter"))
 vim.keymap.set("n", "<leader>fob", builtin.lsp_document_symbols, desc_opts("telescope lsp document symbols"))
+vim.keymap.set("n", "<leader>fow", builtin.lsp_workspace_symbols, desc_opts("telescope lsp workspace symbols"))
 vim.keymap.set("n", "<leader>fod", builtin.diagnostics, desc_opts("telescope diagnostics"))
 vim.keymap.set("n", "<leader>fk", builtin.keymaps, desc_opts("telescope keymaps"))
 vim.keymap.set("n", "<leader>fd", "<Cmd>Telescope file_browser<CR>", desc_opts("telescope file browser"))
+vim.keymap.set("n", "<leader>gr", builtin.lsp_references, desc_opts("telescope references"))
+vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions, desc_opts("go to definition"))
+vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions, desc_opts("go to definition"))
+vim.keymap.set("n", "<leader>gD", builtin.lsp_type_definitions, desc_opts("go to definition of type"))
+
+-- replacement of vim.lsp.buf. commands
+vim.keymap.set("n", "gd", builtin.lsp_definitions, desc_opts("go to definition of type"))
 
 -- Outline
 
@@ -119,13 +136,17 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 
+-- Tabs --
+keymap("n", "<leader>tN", "<CMD>tabnew<CR>", desc_opts("open a new tab"))
+keymap("n", "<leader>tn", "<CMD>tabnext<CR>", desc_opts("next tab"))
+keymap("n", "<leader>tp", "<CMD>tabprevious<CR>", desc_opts("previous tab"))
+keymap("n", "<leader>tc", "<CMD>tabclose<CR>", desc_opts("close tab"))
+
 -- Terminal --
 -- Better terminal navigation
-keymap("n", "<leader>t", "<CMD>botright 14 split term://bash<CR>a", desc_opts("open a terminal") )  -- open a terminal
+keymap("n", "<leader>tt", "<CMD>botright 14 split term://bash<CR>a", desc_opts("open a terminal") )  -- open a terminal
 keymap("n", "<leader>pi", "<CMD>botright 14 split term://ipython<CR>a", desc_opts("open iPython repl") )  -- open an ipython console
-keymap("n", "<leader>pp", "<CMD>botright 14 split term://python<CR>a", desc_opts("open Python repl") )  -- open a python console
-keymap("n", "<leader>j", "<CMD>botright 14 split term://julia --project=.<CR>a", desc_opts("open Julia repl") )  -- open a julia console
-
+keymap("n", "<leader>pp", "<CMD>botright 14 split term://python<CR>a", desc_opts("open Python repl") )  -- open a python console keymap("n", "<leader>j", "<CMD>botright 14 split term://julia --project=.<CR>a", desc_opts("open Julia repl") )  -- open a julia console
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
@@ -134,6 +155,8 @@ keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 -- interface
 keymap("n", "<leader>nr", "<CMD>set relativenumber!<CR>", desc_opts("toggle linear line numbers"))
 keymap("n", "<leader>na", "<CMD>set number!<CR>", desc_opts("toggle relative line numbers"))
+keymap("n", "<leader>vt", "<CMD>GitGutterToggle<CR>", desc_opts("toggle git gutter"))
+keymap("n", "<leader>vc", "<CMD>TSContextToggle<CR>", desc_opts("Toggle Treesitter Context"))
 
 -- DAP
 keymap("n", "<leader>db", "<CMD>DapToggleBreakpoint<CR>", desc_opts("toggle Breakpoint"))
@@ -145,3 +168,15 @@ keymap("n", "<leader>dO", "<CMD>DapStepOut<CR>", desc_opts("step out (debugger)"
 keymap("n", "<leader>dk", "<CMD>DapTerminate<CR>", desc_opts("terminate (debugger)"))
 keymap("n", "<leader>du", "<CMD>lua require('dapui').toggle()<CR>", desc_opts("toggle DAP ui"))
 keymap("n", "<leader>dt", "<CMD>lua require('dap-python').test_method()<CR>", desc_opts("test and debug method under cursor (dap-python)"))
+keymap("n", "<leader>dee", "<CMD>lua require('dapui').eval()<CR>", desc_opts("evaluate expression under cursor"))
+
+local function prompt_eval()
+    local status_ok, dapui = pcall(require, "dapui")
+    if not status_ok then
+        print("Dapui could not be loaded")
+    end
+    local expr = vim.fn.input("Enter expression: ")
+    dapui.eval(expr)
+end
+keymap("n", "<leader>dep", prompt_eval, desc_opts("evaluate user expression"))
+
