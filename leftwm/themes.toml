@@ -26,7 +26,7 @@ repository = "https://gitlab.com/mWalrus/ascent"
 commit = "*"
 version = "1.0.0"
 leftwm_versions = ">0.2.7"
-current = false
+current = true
 
 [[repos.themes]]
 name = "Blue Coffee"
@@ -150,7 +150,6 @@ current = false
 
 [[repos.themes]]
 name = "Ocean-night"
-directory = "/home/hannes/.config/leftwm/themes/Ocean-night"
 repository = "https://github.com/TheRoniOne/ocean-night"
 commit = "*"
 version = "0.0.1"
@@ -272,4 +271,4 @@ name = "MyAscent"
 directory = "/home/hannes/.config/leftwm/themes/MyAscent"
 version = "0.0.0"
 leftwm_versions = "*"
-current = true
+current = false
