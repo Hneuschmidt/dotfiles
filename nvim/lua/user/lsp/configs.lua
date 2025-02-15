@@ -9,6 +9,18 @@ end
 local lspconfig = require("lspconfig")
 --print "Lspconfig loaded"
 
+-- solve rust analyzer complaining about cancelled request
+-- https://github.com/neovim/neovim/issues/30985#issuecomment-2447329525
+for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic'}) do
+    local default_diagnostic_handler = vim.lsp.handlers[method]
+    vim.lsp.handlers[method] = function(err, result, context, config)
+        if err ~= nil and err.code == -32802 then
+            return
+        end
+        return default_diagnostic_handler(err, result, context, config)
+    end
+end
+
 local servers = { "jsonls", "lua_ls", "pyright", "rust_analyzer", "julials", "cssls", "html", "texlab", "clangd", "marksman", "wgsl_analyzer", "taplo", "jdtls"}
 
 lsp_installer.setup({
