@@ -4,7 +4,7 @@ if not status_ok then
     return
 end
 
-obsidian.setup({
+local _, setup_ok = pcall(obsidian.setup, {
     workspaces  ={
         {
             name = "BC",
@@ -12,4 +12,9 @@ obsidian.setup({
         },
     }
 })
+
+if not setup_ok then
+    print "could not setup obsidian"
+    return
+end
 
