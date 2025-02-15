@@ -85,7 +85,7 @@
         (command: Execute, value: "thunderbird", modifier: ["modkey", "Control", "Shift"], key: "m"),
         (command: Execute, value: "keepass", modifier: ["modkey", "Control", "Shift"], key: "k"),
         (command: Execute, value: "flatpak run md.obsidian.Obsidian", modifier: ["modkey", "Control", "Shift"], key: "o"),
-        (command: Execute, value: "konsole", modifier: ["modkey", "Shift"], key: "Return"),
+        (command: Execute, value: "alacritty", modifier: ["modkey", "Shift"], key: "Return"),
 
         (command: CloseWindow, value: "", modifier: ["modkey", "Shift"], key: "q"),
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),

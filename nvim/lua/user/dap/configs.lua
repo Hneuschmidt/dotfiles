@@ -35,4 +35,11 @@ if not status_ok then
     print("dap-python not okay")
 else
     dappython.setup("~/micromamba/envs/dap/bin/python")
+    table.insert(dap.configurations.python, {
+        type = "python",
+        request = "launch",
+        name = "Logging pass through",
+        program = "pytest",
+        args = {"--log_cli", "true"}
+    })
 end
